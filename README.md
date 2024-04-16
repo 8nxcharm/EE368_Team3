@@ -1,5 +1,4 @@
-# HELLO (0_0)_/
+# o7
 
-Branch for landing page feature
+Branch for password bug
 
-:)
