@@ -2,7 +2,7 @@
 
 Branch for password bug w/ landing page
 
-###to compile
+### to compile
 copy build.properties into mangosource directory and modify paths
 
 password report link   
