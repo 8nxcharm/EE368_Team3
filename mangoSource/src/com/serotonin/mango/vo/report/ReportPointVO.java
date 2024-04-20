@@ -11,30 +11,43 @@ public class ReportPointVO implements Serializable {
     private int pointId;
     private String colour;
     private boolean consolidatedChart;
+    private boolean charttype;
+    private String title;
+    private String xlabel;
+    private String ylabel;
+    private double yref;
 
-    public int getPointId() {
-        return pointId;
-    }
+    public int getPointId() {return pointId;}
 
-    public void setPointId(int pointId) {
-        this.pointId = pointId;
-    }
+    public void setPointId(int pointId) {this.pointId = pointId;}
 
-    public String getColour() {
-        return colour;
-    }
+    public String getColour() {return colour;}
 
-    public void setColour(String colour) {
-        this.colour = colour;
-    }
+    public void setColour(String colour) {this.colour = colour;}
 
-    public boolean isConsolidatedChart() {
-        return consolidatedChart;
-    }
+    public boolean isConsolidatedChart() {return consolidatedChart;}
 
-    public void setConsolidatedChart(boolean consolidatedChart) {
-        this.consolidatedChart = consolidatedChart;
-    }
+    public void setConsolidatedChart(boolean consolidatedChart) {this.consolidatedChart = consolidatedChart;}
+
+    public boolean isChartType() {return charttype;}
+
+    public void setcharttype(boolean charttype) {this.charttype = charttype;}
+
+    public String getTitle() {return title;}
+
+    public void setTitle(String title) {this.title = title;}
+
+    public String getXlabel() {return xlabel;}
+
+    public void setXlabel(String xlabel) {this.xlabel = xlabel;}
+
+    public String getYlabel() {return ylabel;}
+
+    public void setYlabel(String ylabel) {this.ylabel = ylabel;}
+
+    public double getYref() {return yref;}
+
+    public void setYref(double yref) {this.yref = yref;}
 
     //
     //
