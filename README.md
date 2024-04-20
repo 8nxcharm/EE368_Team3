@@ -47,10 +47,6 @@ Release Date: April 20, 2024
    - **Current Behavior:** Attempting to change an administrator’s password resulted in an error and the change would not be applied.
    - **Resolved Issue:** This issue has been fixed. Administrators can now update passwords without encountering any errors, ensuring secure and uninterrupted access to the platform.
 
-### Known Issues
-
-- There are still minor inconsistencies with the display of chart legends on some older browser versions. We are working on resolving this and expect a fix in our next update.
-
 ### How to Update
 
 - **Update:** Open terminal and CD into mangoSource folder and run command: ant fullDeploy
