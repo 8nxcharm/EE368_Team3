@@ -1,14 +1,5 @@
-# HELLO (0_0)_/
+# Feature 4 More Report Charts
 
-Welcome to our Repository, great things lie ahead.
-
-MEMBERS:
-
-(leader) Aidan Collins: aitcolli@clarkson.edu 
-Nick Engle: englena@clarkson.edu
-Robert Arcate: arcater@clarkson.edu
-Aydan O'Brien: obriena@clarkson.edu
-Brandon Hacic: hacicbt@clarkson.edu
-Zak Konik: konikza@clarson.edu
-
-:)
+This is the branch for Feature 4 More Report Charts 
+below is the document with the results for this feature: 
+https://docs.google.com/document/d/1N9VFw0TYmxkQTJARy6wGxqiegXScLo6j5hRv8N-0HoM/edit
