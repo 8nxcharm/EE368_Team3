@@ -1,6 +1,6 @@
-# HELLO (0_0)_/
+# HELLO 
 
-Welcome to our Repository, great things lie ahead.
+# Welcome to our our EE368 Project 1 Repository!
 
 MEMBERS:
 
