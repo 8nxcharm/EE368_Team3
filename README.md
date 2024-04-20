@@ -1,5 +1,5 @@
-# github-moodle-lab
+# Feature 4 More Report Charts
 
-This repository is the base repository that students will fork and use for the Github lab.
-
-It contains a single PHP file Hello.php. Students will find problems in this file and write pull requests for the solution during the lab.
+This is the branch for Feature 4 More Report Charts 
+Below is the document with the results for this feature: 
+https://docs.google.com/document/d/1N9VFw0TYmxkQTJARy6wGxqiegXScLo6j5hRv8N-0HoM/edit
