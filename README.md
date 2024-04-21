@@ -50,7 +50,12 @@ Release Date: April 20, 2024
 1. **Password Bug Fix**
    - **Current Behavior:** Attempting to change an administrator’s password resulted in an error and the change would not be applied.
    - **Resolved Issue:** This issue has been fixed. Administrators can now update passwords without encountering any errors, ensuring secure and uninterrupted access to the platform.
-
+2. **Build Properties**
+   - **Current Behavior:** Project not compiling due to improper build properties file path
+   - **Resolved Issue:** This issue has been fixed. Need to update the file path for tomcat.home and db.url depending on where your mangosource file path and tomcat file path are.
+3. **SRC_GEN**
+   -**Current Behavior:** Project not compiling due to missing src_gen error.
+   **Resolved Behavior:** This issue has been fixed. Users need to manually add src_gen file into mangosource folder and rrerun ant fullDeploy.
 ### How to Update
 
 - **Update:** Open terminal and CD into mangoSource folder and run command: ant fullDeploy
