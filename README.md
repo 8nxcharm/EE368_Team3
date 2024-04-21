@@ -55,10 +55,13 @@ Release Date: April 20, 2024
    - **Resolved Issue:** This issue has been fixed. Need to update the file path for tomcat.home and db.url depending on where your mangosource file path and tomcat file path are.
 3. **SRC_GEN**
    -**Current Behavior:** Project not compiling due to missing src_gen error.
-   **Resolved Behavior:** This issue has been fixed. Users need to manually add src_gen file into mangosource folder and rrerun ant fullDeploy.
+   -**Resolved Behavior:** This issue has been fixed. Users need to manually add src_gen file into mangosource folder and rrerun ant fullDeploy.
 ### How to Update
-
-- **Update:** Open terminal and CD into mangoSource folder and run command: ant fullDeploy
+**Step 1**: git clone the repo 
+**Step 2** Copy mangosource file into the mango folder
+**Step 3** Fix Build properties and SRC_gen 
+**Step4** Open the terminal and CD into mangoSource folder and run command: ant fullDeploy
+**Step5** Enjoy Mango
 
 
 
