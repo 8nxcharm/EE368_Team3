@@ -27,6 +27,7 @@ import java.util.ResourceBundle;
 
 import javax.servlet.http.HttpServletRequest;
 
+
 import org.directwebremoting.WebContextFactory;
 
 import com.serotonin.mango.Common;
@@ -98,8 +99,8 @@ public class UsersDwr extends BaseDwr {
     }
 
     public DwrResponseI18n saveUserAdmin(int id, String username, String password, String email, String phone,
-            boolean admin, boolean disabled, int receiveAlarmEmails, boolean receiveOwnAuditEvents,
-            List<Integer> dataSourcePermissions, List<DataPointAccess> dataPointPermissions) {
+                                         boolean admin, boolean disabled, int receiveAlarmEmails, boolean receiveOwnAuditEvents,
+                                         List<Integer> dataSourcePermissions, List<DataPointAccess> dataPointPermissions) {
         Permissions.ensureAdmin();
 
         // Validate the given information. If there is a problem, return an appropriate error message.
@@ -108,10 +109,16 @@ public class UsersDwr extends BaseDwr {
         UserDao userDao = new UserDao();
 
         User user;
-        if (id == Common.NEW_ID)
+        if (id == Common.NEW_ID) {
             user = new User();
-        else
+            //set new user's home url to a blank string so it is no longer null (password bug fix)
+            user.setHomeUrl("");
+        } else {
             user = userDao.getUser(id);
+            //if user's home url is null, set it to a blank string (password bug fix)
+            if (StringUtils.isEmpty(user.getHomeUrl()))
+                user.setHomeUrl("");
+        }
         user.setUsername(username);
         if (!StringUtils.isEmpty(password))
             user.setPassword(Common.encrypt(password));
@@ -126,6 +133,11 @@ public class UsersDwr extends BaseDwr {
 
         DwrResponseI18n response = new DwrResponseI18n();
         user.validate(response);
+
+        if (!StringUtils.isLengthGreaterThan(password, 7)) //if password is not more than 7 characters
+            //add message that the password must be at least 8 characters long
+            //(changes will not be saved when messages are added to response)
+            response.addMessage(new LocalizableMessage("users.validate.badPassword"));
 
         // Check if the username is unique.
         User dupUser = userDao.getUser(username);
@@ -156,7 +168,7 @@ public class UsersDwr extends BaseDwr {
     }
 
     public DwrResponseI18n saveUser(int id, String password, String email, String phone, int receiveAlarmEmails,
-            boolean receiveOwnAuditEvents) {
+                                    boolean receiveOwnAuditEvents) {
         HttpServletRequest request = WebContextFactory.get().getHttpServletRequest();
         User user = Common.getUser(request);
         if (user.getId() != id)
@@ -164,6 +176,9 @@ public class UsersDwr extends BaseDwr {
 
         UserDao userDao = new UserDao();
         User updateUser = userDao.getUser(id);
+        //if user's home url is null, set it to a blank string (password bug fix)
+        if (StringUtils.isEmpty(user.getHomeUrl()))
+            user.setHomeUrl("");
         if (!StringUtils.isEmpty(password))
             updateUser.setPassword(Common.encrypt(password));
         updateUser.setEmail(email);
@@ -173,6 +188,11 @@ public class UsersDwr extends BaseDwr {
 
         DwrResponseI18n response = new DwrResponseI18n();
         updateUser.validate(response);
+
+        if (!StringUtils.isLengthGreaterThan(password, 7)) //if password is not more than 7 characters
+            //add message that the password must be at least 8 characters long
+            //(changes will not be saved when messages are added to response)
+            response.addMessage(new LocalizableMessage("users.validate.badPassword"));
 
         if (!response.getHasMessages()) {
             userDao.saveUser(user);

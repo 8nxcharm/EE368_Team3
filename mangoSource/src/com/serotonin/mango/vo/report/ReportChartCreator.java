@@ -56,6 +56,8 @@ import com.serotonin.mango.view.stats.StatisticsGenerator;
 import com.serotonin.mango.view.stats.ValueChangeCounter;
 import com.serotonin.mango.view.text.TextRenderer;
 import com.serotonin.mango.vo.UserComment;
+import com.serotonin.mango.vo.report.ReportChartCreator.PointStatistics;
+import com.serotonin.mango.vo.report.ReportChartCreator.StartsAndRuntimeWrapper;
 import com.serotonin.mango.web.email.MessageFormatDirective;
 import com.serotonin.mango.web.email.UsedImagesDirective;
 import com.serotonin.util.ColorUtils;
@@ -99,7 +101,7 @@ public class ReportChartCreator {
     /**
      * Uses the given parameters to create the data for the fields of this class. Once the content has been created the
      * getters for the fields can be used to retrieve.
-     * 
+     *
      * @param reportInstance
      * @param reportDao
      * @param inlinePrefix
@@ -107,7 +109,7 @@ public class ReportChartCreator {
      * @param createExportFile
      */
     public void createContent(ReportInstance reportInstance, ReportDao reportDao, String inlinePrefix,
-            boolean createExportFile) {
+                              boolean createExportFile) {
         this.inlinePrefix = inlinePrefix;
 
         reportInstance.setBundle(bundle);
@@ -147,7 +149,9 @@ public class ReportChartCreator {
             if (ptsc.hasData()) {
                 if (inlinePrefix != null)
                     model.put("chartName", inlinePrefix + pointStat.getChartName());
-                pointStat.setImageData(ImageChartUtils.getChartData(ptsc, POINT_IMAGE_WIDTH, POINT_IMAGE_HEIGHT));
+                pointStat.setImageData(ImageChartUtils.getChartData(ptsc, POINT_IMAGE_WIDTH, POINT_IMAGE_HEIGHT,
+                        pointStat.isChartType(), pointStat.getTitle(),
+                        pointStat.getXlabel(), pointStat.getYlabel(), pointStat.getYref()));
             }
         }
 
@@ -283,58 +287,57 @@ public class ReportChartCreator {
         private Color numericTimeSeriesColor;
         private DiscreteTimeSeries discreteTimeSeries;
         private byte[] imageData;
+        private boolean charttype;
+        private String title;
+        private String xlabel;
+        private String ylabel;
+        private double yref;
 
-        public PointStatistics(int reportPointId) {
-            this.reportPointId = reportPointId;
-        }
+        public boolean isChartType() {return charttype;}
 
-        public String getName() {
-            return name;
-        }
+        public void setcharttype(boolean charttype) {this.charttype = charttype;}
 
-        public void setName(String name) {
-            this.name = name;
-        }
+        public String getTitle() {return title;}
 
-        public int getDataType() {
-            return dataType;
-        }
+        public void setTitle(String title) {this.title = title;}
 
-        public void setDataType(int dataType) {
-            this.dataType = dataType;
-        }
+        public String getXlabel() {return xlabel;}
 
-        public String getDataTypeDescription() {
-            return dataTypeDescription;
-        }
+        public void setXlabel(String xlabel) {this.xlabel = xlabel;}
 
-        public void setDataTypeDescription(String dataTypeDescription) {
-            this.dataTypeDescription = dataTypeDescription;
-        }
+        public String getYlabel() {return ylabel;}
 
-        public String getStartValue() {
-            return startValue;
-        }
+        public void setYlabel(String ylabel) {this.ylabel = ylabel;}
 
-        public void setStartValue(String startValue) {
-            this.startValue = startValue;
-        }
+        public double getYref() {return yref;}
 
-        public StatisticsGenerator getStats() {
-            return stats;
-        }
+        public void setYref(double yref) {this.yref = yref;}
 
-        public void setStats(StatisticsGenerator stats) {
-            this.stats = stats;
-        }
+        public PointStatistics(int reportPointId) {this.reportPointId = reportPointId;}
 
-        public TextRenderer getTextRenderer() {
-            return textRenderer;
-        }
+        public String getName() {return name;}
 
-        public void setTextRenderer(TextRenderer textRenderer) {
-            this.textRenderer = textRenderer;
-        }
+        public void setName(String name) {this.name = name;}
+
+        public int getDataType() {return dataType;}
+
+        public void setDataType(int dataType) {this.dataType = dataType;}
+
+        public String getDataTypeDescription() {return dataTypeDescription;}
+
+        public void setDataTypeDescription(String dataTypeDescription) {this.dataTypeDescription = dataTypeDescription;}
+
+        public String getStartValue() {return startValue;}
+
+        public void setStartValue(String startValue) {this.startValue = startValue;}
+
+        public StatisticsGenerator getStats() {return stats;}
+
+        public void setStats(StatisticsGenerator stats) {this.stats = stats;}
+
+        public TextRenderer getTextRenderer() {return textRenderer;}
+
+        public void setTextRenderer(TextRenderer textRenderer) {this.textRenderer = textRenderer;}
 
         public TimeSeries getNumericTimeSeries() {
             return numericTimeSeries;
@@ -494,6 +497,11 @@ public class ReportChartCreator {
             point = new PointStatistics(pointInfo.getReportPointId());
             point.setName(pointInfo.getExtendedName());
             point.setDataType(pointInfo.getDataType());
+            point.setcharttype(pointInfo.isChartType());
+            point.setTitle(pointInfo.getTitle());
+            point.setXlabel(pointInfo.getXlabel());
+            point.setYlabel(pointInfo.getYlabel());
+            point.setYref(pointInfo.getYref());
             point.setDataTypeDescription(DataTypes.getDataTypeMessage(pointInfo.getDataType()).getLocalizedMessage(
                     bundle));
             point.setTextRenderer(pointInfo.getTextRenderer());
