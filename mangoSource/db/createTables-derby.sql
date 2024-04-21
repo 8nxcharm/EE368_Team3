@@ -398,19 +398,23 @@ create table reportInstancePoints (
   colour varchar(6),
   consolidatedChart char(1)
 );
-alter table reportInstancePoints add constraint reportInstancePointsPk primary key (id);
-alter table reportInstancePoints add constraint reportInstancePointsFk1 foreign key (reportInstanceId) 
-  references reportInstances(id) on delete cascade;
-
 create table reportInstanceData (
   pointValueId bigint not null,
   reportInstancePointId int not null,
   pointValue double,
   ts bigint not null
 );
+
+reportInstanceData table
 alter table reportInstanceData add constraint reportInstanceDataPk primary key (pointValueId, reportInstancePointId);
 alter table reportInstanceData add constraint reportInstanceDataFk1 foreign key (reportInstancePointId) 
-  references reportInstancePoints(id) on delete cascade;
+references reportInstancePoints(id) on delete cascade;
+
+table
+--alter table reportInstanceData
+--drop constraint reportInstanceDataPk;
+alter table reportInstanceData
+add constraint reportInstanceDataPk primary key (reportInstancePointId, pointValueId);
 
 create table reportInstanceDataAnnotations (
   pointValueId bigint not null,
