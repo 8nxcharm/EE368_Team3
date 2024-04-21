@@ -6,13 +6,17 @@
 - Feature 3 Reports Optimization
 - Feature 4 More Report Charts
 
-MEMBERS:
-(leader) Aidan Collins: aitcolli@clarkson.edu 
-Nick Engle: englena@clarkson.edu
-Robert Arcate: arcater@clarkson.edu
-Aydan O'Brien: obriena@clarkson.edu
-Brandon Hacic: hacicbt@clarkson.edu
-Zak Konik: konikza@clarkson.edu
+
+### Team Members
+
+| Name          | Email                    | Role    |
+|---------------|--------------------------|---------|
+| Aidan Collins | aitcolli@clarkson.edu    | Leader  |
+| Robert Arcate | arcater@clarkson.edu     | Member  |
+| Nick Engle    | englena@clarkson.edu     | Member  |
+| Brandon Hacic | hacicbt@clarkson.edu     | Member  |
+| Zak Konik     | konikza@clarkson.edu     | Member  |
+| Aydan O'Brien | obriena@clarkson.edu     | Member  |
 
 Test Results can be found in this document:
 https://docs.google.com/document/d/11hkKJfId4TcZ7m1AtkmPOLXiFLUp8G-kRpQRlxyWKQ0/edit
