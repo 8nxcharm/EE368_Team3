@@ -2,7 +2,7 @@
     Mango - Open Source M2M - http://mango.serotoninsoftware.com
     Copyright (C) 2006-2011 Serotonin Software Technologies Inc.
     @author Matthew Lohbihler
-    
+
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
@@ -49,7 +49,7 @@
     }
     </style>
   </jsp:attribute>
-  
+
   <jsp:body>
     <script type="text/javascript">
       dojo.require("dojo.widget.SplitContainer");
@@ -59,27 +59,27 @@
       var owner;
       var pointNames = {};
       var watchlistChangeId = 0;
-      
+
       function init() {
           WatchListDwr.init(function(data) {
               mango.share.users = data.shareUsers;
-              
+
               // Create the point tree.
               var rootFolder = data.pointFolder;
               var tree = dojo.widget.manager.getWidgetById('tree');
               var i;
-              
+
               for (i=0; i<rootFolder.subfolders.length; i++)
                   addFolder(rootFolder.subfolders[i], tree);
-              
+
               for (i=0; i<rootFolder.points.length; i++)
                   addPoint(rootFolder.points[i], tree);
-              
+
               hide("loadingImg");
               show("treeDiv");
-              
+
               addPointNames(rootFolder);
-              
+
               // Add default points.
               displayWatchList(data.selectedWatchList);
               maybeDisplayDeleteImg();
@@ -89,7 +89,7 @@
           dojo.event.topic.subscribe("tree/titleClick", handler, 'titleClick');
           dojo.event.topic.subscribe("tree/expand", handler, 'expand');
       }
-      
+
       function addPointNames(folder) {
           var i;
           for (i=0; i<folder.points.length; i++)
@@ -97,7 +97,7 @@
           for (i=0; i<folder.subfolders.length; i++)
               addPointNames(folder.subfolders[i]);
       }
-      
+
       function addFolder(folder, parent) {
           var folderNode = dojo.widget.createWidget("TreeNode", {
                   title: "<img src='images/folder_brick.png'/> "+ folder.name,
@@ -106,24 +106,24 @@
           });
           parent.addChild(folderNode);
       }
-      
+
       function populateFolder(folderNode, lazyLoadData) {
           // Turn this off so as not to confuse the tree node.
           folderNode.isExpanded = false;
-          
+
           var i;
           for (i=0; i<lazyLoadData.subfolders.length; i++)
               addFolder(lazyLoadData.subfolders[i], folderNode);
-          
+
           for (i=0; i<lazyLoadData.points.length; i++) {
               addPoint(lazyLoadData.points[i], folderNode);
               if ($("p"+ lazyLoadData.points[i].key))
                   togglePointTreeIcon(lazyLoadData.points[i].key, false);
           }
-          
+
           folderNode.expand();
       }
-      
+
       function addPoint(point, parent) {
           var pointNode = dojo.widget.createWidget("TreeNode", {
                   title: "<img src='images/icon_comp.png'/> <span id='ph"+ point.key +"Name'>"+ point.value +"</span> "+
@@ -133,14 +133,14 @@
           parent.addChild(pointNode);
           $("ph"+ point.key +"Image").mangoName = "pointTreeIcon";
       }
-      
+
       var TreeClickHandler = function() {
           this.titleClick = function(message) {
               var widget = message.source;
               if (!widget.isFolder)
                   addToWatchList(widget.object.key);
           },
-          
+
           this.expand = function(message) {
               if (message.source.lazyLoadData) {
                   var lazyLoadData = message.source.lazyLoadData;
@@ -149,15 +149,15 @@
               }
           }
       }
-      
+
       function displayWatchList(data) {
           if (!data.points)
               // Couldn't find the watchlist. Reload the page
               window.location.reload();
-          
+
           var points = data.points;
           owner = data.access == <c:out value="<%= ShareUser.ACCESS_OWNER %>"/>;
-          
+
           // Add the new rows.
           for (var i=0; i<points.length; i++) {
               if (!pointNames[points[i]]) {
@@ -167,20 +167,20 @@
               }
               addToWatchListImpl(points[i]);
           }
-          
+
           fixRowFormatting();
           mango.view.watchList.reset();
-          
+
           var select = $("watchListSelect");
           var txt = $("newWatchListName");
           $set(txt, select.options[select.selectedIndex].text);
-          
+
           // Display controls based on access
           var iconSrc;
           if (owner) {
               show("wlEditDiv", "inline");
               show("usersEditDiv", "inline");
-              
+
               // Set the share users.
               mango.share.writeSharedUsers(data.users);
               iconSrc = "images/bullet_go.png";
@@ -190,17 +190,17 @@
               hide("usersEditDiv");
               iconSrc = "images/bullet_key.png";
           }
-          
+
           var icons = getElementsByMangoName($("treeDiv"), "pointTreeIcon");
           for (var i=0; i<icons.length; i++)
               icons[i].src = iconSrc;
       }
-      
+
       function showWatchListEdit() {
           openLayer("wlEdit");
           $("newWatchListName").select();
       }
-    
+
       function saveWatchListName() {
           var name = $get("newWatchListName");
           var select = $("watchListSelect");
@@ -208,13 +208,13 @@
           WatchListDwr.updateWatchListName(name);
           hideLayer("wlEdit");
       }
-      
+
       function watchListChanged() {
           // Clear the list.
           var rows = getElementsByMangoName($("watchListTable"), "watchListRow");
           for (var i=0; i<rows.length; i++)
               removeFromWatchListImpl(rows[i].id.substring(1));
-          
+
           watchlistChangeId++;
           var id = watchlistChangeId;
           WatchListDwr.setSelectedWatchList($get("watchListSelect"), function(data) {
@@ -222,12 +222,12 @@
                   displayWatchList(data);
           });
       }
-      
+
       function addWatchList(copy) {
     	  var copyId = ${NEW_ID};
     	  if (copy)
               copyId = $get("watchListSelect");
-    	  
+
           WatchListDwr.addNewWatchList(copyId, function(watchListData) {
               var wlselect = $("watchListSelect");
               wlselect.options[wlselect.options.length] = new Option(watchListData.value, watchListData.key);
@@ -236,26 +236,26 @@
               maybeDisplayDeleteImg();
           });
       }
-      
+
       function deleteWatchList() {
           var wlselect = $("watchListSelect");
           var deleteId = $get(wlselect);
           wlselect.options[wlselect.selectedIndex] = null;
-          
+
           watchListChanged();
           WatchListDwr.deleteWatchList(deleteId);
           maybeDisplayDeleteImg();
       }
-      
+
       function maybeDisplayDeleteImg() {
           var wlselect = $("watchListSelect");
           display("watchListDeleteImg", wlselect.options.length > 1);
       }
-      
+
       function showWatchListUsers() {
           openLayer("usersEdit");
       }
-      
+
       function openLayer(nodeId) {
           var nodeDiv = $(nodeId);
           closeLayers(nodeId);
@@ -264,15 +264,15 @@
           nodeDiv.style.left = (ancBounds.w - divBounds.w - 30) +"px";
           showLayer(nodeDiv, true);
       }
-    
+
       function closeLayers(exclude) {
           if (exclude != "wlEdit")
               hideLayer("wlEdit");
           if (exclude != "usersEdit")
               hideLayer("usersEdit");
       }
-      
-      
+
+
       //
       // Watch list membership
       //
@@ -284,43 +284,43 @@
           WatchListDwr.addToWatchList(pointId, mango.view.watchList.setDataImpl);
           fixRowFormatting();
       }
-      
+
       var watchListCount = 0;
       function addToWatchListImpl(pointId) {
           watchListCount++;
-      
+
           // Add a row for the point by cloning the template row.
           var pointContent = createFromTemplate("p_TEMPLATE_", pointId, "watchListTable");
           pointContent.mangoName = "watchListRow";
-          
+
           if (owner) {
               show("p"+ pointId +"MoveUp");
               show("p"+ pointId +"MoveDown");
               show("p"+ pointId +"Delete");
           }
-          
+
           $("p"+ pointId +"Name").innerHTML = pointNames[pointId];
-          
+
           // Disable the element in the point list.
           togglePointTreeIcon(pointId, false);
       }
-      
+
       function removeFromWatchList(pointId) {
           removeFromWatchListImpl(pointId);
           fixRowFormatting();
           WatchListDwr.removeFromWatchList(pointId);
       }
-      
+
       function removeFromWatchListImpl(pointId) {
           watchListCount--;
           var pointContent = $("p"+ pointId);
           var watchListTable = $("watchListTable");
           watchListTable.removeChild(pointContent);
-          
+
           // Enable the element in the point list.
           togglePointTreeIcon(pointId, true);
       }
-      
+
       function togglePointTreeIcon(pointId, enable) {
           var node = $("ph"+ pointId +"Image");
           if (node) {
@@ -330,7 +330,7 @@
                   dojo.html.setOpacity(node, 0.2);
           }
       }
-      
+
       //
       // List state updating
       //
@@ -351,7 +351,7 @@
               fixRowFormatting();
           }
       }
-      
+
       function moveRowUp(pointId) {
           var watchListTable = $("watchListTable");
           var rows = getElementsByMangoName(watchListTable, "watchListRow");
@@ -366,7 +366,7 @@
               fixRowFormatting();
           }
       }
-      
+
       function fixRowFormatting() {
           var rows = getElementsByMangoName($("watchListTable"), "watchListRow");
           if (rows.length == 0) {
@@ -384,7 +384,7 @@
                       if (owner)
                           show(rows[i].id +"MoveUp");
                   }
-                      
+
                   if (i == rows.length - 1)
                       hide(rows[i].id +"MoveDown");
                   else if (owner)
@@ -392,7 +392,7 @@
               }
           }
       }
-      
+
       function showChart(mangoId, event, source) {
     	  if (isMouseLeaveOrEnter(event, source)) {
               // Take the data in the chart textarea and put it into the chart layer div
@@ -400,47 +400,47 @@
               showMenu('p'+ mangoId +'ChartLayer', 4, 12);
     	  }
       }
-      
+
       function hideChart(mangoId, event, source) {
           if (isMouseLeaveOrEnter(event, source))
         	  hideLayer('p'+ mangoId +'ChartLayer');
       }
-      
+
       //
       // Image chart
       //
       function getImageChart() {
           var width = dojo.html.getContentBox($("imageChartDiv")).width - 20;
           startImageFader($("imageChartImg"));
-          WatchListDwr.getImageChartData(getChartPointList(), $get("fromYear"), $get("fromMonth"), $get("fromDay"), 
-        		  $get("fromHour"), $get("fromMinute"), $get("fromSecond"), $get("fromNone"), $get("toYear"), 
-        		  $get("toMonth"), $get("toDay"), $get("toHour"), $get("toMinute"), $get("toSecond"), $get("toNone"), 
+          WatchListDwr.getImageChartData(getChartPointList(), $get("fromYear"), $get("fromMonth"), $get("fromDay"),
+        		  $get("fromHour"), $get("fromMinute"), $get("fromSecond"), $get("fromNone"), $get("toYear"),
+        		  $get("toMonth"), $get("toDay"), $get("toHour"), $get("toMinute"), $get("toSecond"), $get("toNone"),
         		  width, 350, function(data) {
               $("imageChartDiv").innerHTML = data;
               stopImageFader($("imageChartImg"));
-              
+
               // Make sure the length of the chart doesn't mess up the watch list display. Do async to
               // make sure the rendering gets done.
               setTimeout('dojo.widget.manager.getWidgetById("splitContainer").onResized()', 2000);
           });
       }
-      
+
       function getChartData() {
     	  var pointIds = getChartPointList();
     	  if (pointIds.length == 0)
     		  alert("<fmt:message key="watchlist.noExportables"/>");
     	  else {
               startImageFader($("chartDataImg"));
-              WatchListDwr.getChartData(getChartPointList(), $get("fromYear"), $get("fromMonth"), $get("fromDay"), 
-                      $get("fromHour"), $get("fromMinute"), $get("fromSecond"), $get("fromNone"), $get("toYear"), 
-                      $get("toMonth"), $get("toDay"), $get("toHour"), $get("toMinute"), $get("toSecond"), $get("toNone"), 
+              WatchListDwr.getChartData(getChartPointList(), $get("fromYear"), $get("fromMonth"), $get("fromDay"),
+                      $get("fromHour"), $get("fromMinute"), $get("fromSecond"), $get("fromNone"), $get("toYear"),
+                      $get("toMonth"), $get("toDay"), $get("toHour"), $get("toMinute"), $get("toSecond"), $get("toNone"),
                       function(data) {
                   stopImageFader($("chartDataImg"));
                   window.location = "chartExport/watchListData.csv";
               });
     	  }
       }
-      
+
       function getChartPointList() {
           var pointIds = $get("chartCB");
           for (var i=pointIds.length-1; i>=0; i--) {
@@ -450,22 +450,35 @@
           }
           return pointIds;
       }
-      
+
       //
       // Create report
       function createReport() {
           window.location = "reports.shtm?wlid="+ $get("watchListSelect");
       }
     </script>
-    
+    <h1>Welcome to Mango</h1>
     <table width="100%">
     <tr><td>
       <div dojoType="SplitContainer" orientation="horizontal" sizerWidth="3" activeSizing="true" class="borderDiv"
               widgetId="splitContainer" style="width: 100%; height: 500px;">
         <div dojoType="ContentPane" sizeMin="20" sizeShare="20" style="overflow:auto;padding:2px;">
-          <span class="smallTitle"><fmt:message key="watchlist.points"/></span> <tag:help id="watchListPoints"/><br/>
-          <img src="images/hourglass.png" id="loadingImg"/>
-          <div id="treeDiv" style="display:none;"><div dojoType="Tree" widgetId="tree"></div></div>
+            <div style = "display: none;">
+                <span class="smallTitle"><fmt:message key="watchlist.points"/></span> <tag:help id="watchListPoints"/><br/>
+                <img src="images/hourglass.png" id="loadingImg"/>
+                <div id="treeDiv" style="display:none;"><div dojoType="Tree" widgetId="tree"></div></div>
+            </div>
+            <span class="smallTitle">Information about Mango</span>
+                      <p>Mango is an open-source M2M (Machine to Machine) platform that provides a comprehensive solution for managing
+                      and monitoring devices and sensors. It offers a wide range of features including data collection, analysis, and
+                      visualization.</p>
+                      <p>Mango supports various types of sensors, including temperature, humidity, and motion sensors, among others.
+                      These sensors can be used to monitor environmental conditions, detect movement, and more. The platform's modular
+                      architecture allows for easy integration with different types of devices and sensors, making it highly versatile.</p>
+                      <p>With Mango, you can create custom dashboards to monitor your devices and sensors in real-time, set up alerts for
+                      specific conditions, and even share data with other users. You can modify watch lists
+                      <a href="/test/watch_list.shtm">here</a>. If you wish to edit the system settings you can change them
+                      <a href="/test/system_settings.shtm">here</a>.
         </div>
         <div dojoType="ContentPane" sizeMin="50" sizeShare="50" style="overflow:auto; padding:2px 10px 2px 2px;">
           <table cellpadding="0" cellspacing="0" width="100%">

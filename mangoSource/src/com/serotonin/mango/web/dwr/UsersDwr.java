@@ -111,12 +111,12 @@ public class UsersDwr extends BaseDwr {
         User user;
         if (id == Common.NEW_ID) {
             user = new User();
-            //set new user's home url to a blank string so it is no longer null (password bug fix)
+			//set new user's home url to a blank string so it is no longer null (password bug fix)
             user.setHomeUrl("");
         } else {
             user = userDao.getUser(id);
-            //if user's home url is null, set it to a blank string (password bug fix)
-            if (StringUtils.isEmpty(user.getHomeUrl()))
+			//if user's home url is null, set it to a blank string (password bug fix)
+			if (StringUtils.isEmpty(user.getHomeUrl()))
                 user.setHomeUrl("");
         }
         user.setUsername(username);
@@ -135,9 +135,9 @@ public class UsersDwr extends BaseDwr {
         user.validate(response);
 
         if (!StringUtils.isLengthGreaterThan(password, 7)) //if password is not more than 7 characters
-            //add message that the password must be at least 8 characters long
-            //(changes will not be saved when messages are added to response)
-            response.addMessage(new LocalizableMessage("users.validate.badPassword"));
+			//add message that the password must be at least 8 characters long
+			//(changes will not be saved when messages are added to response)
+			response.addMessage(new LocalizableMessage("users.validate.badPassword"));
 
         // Check if the username is unique.
         User dupUser = userDao.getUser(username);
@@ -176,7 +176,7 @@ public class UsersDwr extends BaseDwr {
 
         UserDao userDao = new UserDao();
         User updateUser = userDao.getUser(id);
-        //if user's home url is null, set it to a blank string (password bug fix)
+		//if user's home url is null, set it to a blank string (password bug fix)
         if (StringUtils.isEmpty(user.getHomeUrl()))
             user.setHomeUrl("");
         if (!StringUtils.isEmpty(password))
@@ -190,8 +190,8 @@ public class UsersDwr extends BaseDwr {
         updateUser.validate(response);
 
         if (!StringUtils.isLengthGreaterThan(password, 7)) //if password is not more than 7 characters
-            //add message that the password must be at least 8 characters long
-            //(changes will not be saved when messages are added to response)
+			//add message that the password must be at least 8 characters long
+			//(changes will not be saved when messages are added to response)
             response.addMessage(new LocalizableMessage("users.validate.badPassword"));
 
         if (!response.getHasMessages()) {

@@ -478,7 +478,7 @@
                     <sst:option value="${wl.key}">${sst:escapeLessThan(wl.value)}</sst:option>
                   </c:forEach>
                 </sst:select>
-                
+
                 <div id="wlEditDiv" style="display:inline;" onmouseover="showWatchListEdit()">
                   <tag:img id="wlEditImg" png="pencil" title="watchlist.editListName"/>
                   <div id="wlEdit" style="visibility:hidden;left:0px;top:15px;" class="labelDiv"
@@ -489,7 +489,7 @@
                     <a class="ptr" id="saveWatchListNameLink" onclick="saveWatchListName()"><fmt:message key="common.save"/></a>
                   </div>
                 </div>
-                
+
                 <div id="usersEditDiv" style="display:inline;" onmouseover="showWatchListUsers()">
                   <tag:img png="user" title="share.sharing" onmouseover="closeLayers();"/>
                   <div id="usersEdit" style="visibility:hidden;left:0px;top:15px;" class="labelDiv">
@@ -497,7 +497,7 @@
                             closeFunction="hideLayer('usersEdit')"/>
                   </div>
                 </div>
-                
+
                 <tag:img png="copy" onclick="addWatchList(true)" title="watchlist.copyList" onmouseover="closeLayers();"/>
                 <tag:img png="add" onclick="addWatchList(false)" title="watchlist.addNewList" onmouseover="closeLayers();"/>
                 <tag:img png="delete" id="watchListDeleteImg" onclick="deleteWatchList()" title="watchlist.deleteList"
@@ -516,14 +516,14 @@
                       <tr>
                         <td onmouseover="mango.view.showChange('p'+ getMangoId(this) +'Change', 4, 12);"
                                 onmouseout="mango.view.hideChange('p'+ getMangoId(this) +'Change');"
-                                id="p_TEMPLATE_ChangeMin" style="display:none;"><img alt="" id="p_TEMPLATE_Changing" 
-                                src="images/icon_edit.png"/><div id="p_TEMPLATE_Change" class="labelDiv" 
+                                id="p_TEMPLATE_ChangeMin" style="display:none;"><img alt="" id="p_TEMPLATE_Changing"
+                                src="images/icon_edit.png"/><div id="p_TEMPLATE_Change" class="labelDiv"
                                 style="visibility:hidden;top:10px;left:1px;" onmouseout="hideLayer(this);">
                           <tag:img png="hourglass" title="common.gettingData"/>
                         </div></td>
                         <td id="p_TEMPLATE_ChartMin" style="display:none;" onmouseover="showChart(getMangoId(this), event, this);"
-                                onmouseout="hideChart(getMangoId(this), event, this);"><img alt="" 
-                                src="images/icon_chart.png"/><div id="p_TEMPLATE_ChartLayer" class="labelDiv" 
+                                onmouseout="hideChart(getMangoId(this), event, this);"><img alt=""
+                                src="images/icon_chart.png"/><div id="p_TEMPLATE_ChartLayer" class="labelDiv"
                                 style="visibility:hidden;top:0;left:0;"></div><textarea
                                 style="display:none;" id="p_TEMPLATE_Chart"><tag:img png="hourglass"
                                 title="common.gettingData"/></textarea></td>
@@ -557,7 +557,7 @@
         </div>
       </div>
     </td></tr>
-    
+
     <tr><td>
       <div class="borderDiv" style="width: 100%;">
         <table width="100%">
@@ -575,7 +575,7 @@
         </table>
       </div>
     </td></tr>
-    
+
     </table>
   </jsp:body>
 </tag:page>

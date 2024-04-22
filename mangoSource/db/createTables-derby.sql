@@ -400,6 +400,10 @@ create table reportInstancePoints (
   consolidatedChart char(1)                                                       -- Flag to indicate if the data point is to be consolidated on a chart ('Y' or 'N')
 );
 
+alter table reportInstancePoints add constraint reportInstancePointsPk primary key (id);
+alter table reportInstancePoints add constraint reportInstancePointsFk1 foreign key (reportInstanceId)
+  references reportInstances(id) on delete cascade;
+
 -- Create a table to store data values associated with each report instance point.
 create table reportInstanceData (
   pointValueId bigint not null,                                                   -- Unique ID for each data point value
